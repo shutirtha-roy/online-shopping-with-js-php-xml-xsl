@@ -7,15 +7,15 @@
         account_service.php. 
     */
     function hasUserEnteredCorrectInputs($first_name, $last_name, $email, $password, $confirmPassword, $phone) {
-        if(!matchName($first_name)) {
+        if(!matchName(trim($first_name))) {
             return ['success' => false, 'errors' => ERROR_FIRST_NAME_REQUIRED];
         }
 
-        if(!matchName($last_name)) {
+        if(!matchName(trim($last_name))) {
             return ['success' => false, 'errors' => ERROR_LAST_NAME_REQUIRED];
         }
         
-        if(!matchEmail($email)) {
+        if(!matchEmail(trim($email))) {
             return ['success' => false, 'errors' => ERROR_EMAIL_INVALID];
         }
 

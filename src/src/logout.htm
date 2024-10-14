@@ -37,15 +37,15 @@
     <div class="container mt-5">
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Logged Out Successfully!</h4>
-            <p>Thank you for using the BuyOnline System, <span id="managerId"></span>.</p>
+            <p>Thank you for using the BuyOnline System, <span id="id"></span>.</p>
         </div>
     </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const managerId = urlParams.get('managerId');
+        const id = urlParams.get('id');
         
-        document.getElementById('managerId').textContent = managerId || 'Manager';
+        document.getElementById('id').textContent = id;
     </script>
 </body>
 </html>

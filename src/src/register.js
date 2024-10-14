@@ -136,11 +136,11 @@ const resetInput = () => {
 
 const registerUserToXML = () => {
     if ((xHRObject.readyState == 4) && (xHRObject.status == 200)) {
-        if(xHRObject.responseText.includes("Your email is already registered.")) {
-            showErrorMessage(xHRObject.responseText);
-        } else {
+        if(xHRObject.responseText.includes("have successfully registered with your email")) {
             showSuccessMessage(xHRObject.responseText);
             resetInput();
+        } else {
+            showErrorMessage(xHRObject.responseText);
         }
 	}
 }
@@ -158,11 +158,9 @@ const registerUser = () => {
             return;
     };
 
-    var url = `register.php?fname=${firstName}&lname=${lastName}
-        &password=${password}&confirm_password=${confirmPassword}
-        &email=${encodeURIComponent(email)}&phone=${phone}&id=${Number(new Date)}`;
+    var url = `register.php?fname=${firstName}&lname=${lastName}&email=${encodeURIComponent(email)}&password=${password}&confirm_password=${confirmPassword}&phone=${phone}&id=${Number(new Date)}`;
     const isAsynchronous = true;
-    xHRObject.open("POST", url, isAsynchronous);
+    xHRObject.open("GET", url, isAsynchronous);
     xHRObject.onreadystatechange = registerUserToXML;
 	xHRObject.send(null);
     

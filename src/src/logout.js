@@ -28,14 +28,34 @@ const showErrorLogoutMessage = (message) => {
     }, duration);
 }
 
+
+
 const logoutManagerFromTheSystem = () => {
     if ((xHRObject.readyState == 4) && (xHRObject.status == 200)) {
         if(xHRObject.responseText.includes("You are not logged in.")) {
             showErrorLogoutMessage(xHRObject.responseText);
         } else {
-            window.location.href = `logout.htm?managerId=${encodeURIComponent(xHRObject.responseText)}`;
+            window.location.href = `logout.htm?id=${encodeURIComponent(xHRObject.responseText)}`;
         }
 	}
+}
+
+const logoutCustomerFromTheSystem = () => {
+    if ((xHRObject.readyState == 4) && (xHRObject.status == 200)) {
+        if(xHRObject.responseText.includes("You are not logged in.")) {
+            showErrorLogoutMessage(xHRObject.responseText);
+        } else {
+            window.location.href = `logout.htm?id=${encodeURIComponent(xHRObject.responseText)}`;
+        }
+	}
+}
+
+const logoutCustomer = () => {
+    var url = `logout.php?isCustomer=YES`;
+    const isAsynchronous = true;
+    xHRObject.open("POST", url, isAsynchronous);
+    xHRObject.onreadystatechange = logoutCustomerFromTheSystem;
+	xHRObject.send(null);
 }
 
 const logoutManager = () => {

@@ -9,27 +9,6 @@ const createXHRObject = () => {
 let errors = [];
 var xHRObject = createXHRObject();
 
-const showSuccessMessage = (message) => {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = 'alert alert-success alert-dismissible fade show';
-    alertDiv.setAttribute('role', 'alert');
-    alertDiv.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    `;
-
-    const container = document.getElementById('successful_registration');
-    container.innerHTML = '';
-
-    container.appendChild(alertDiv);
-
-    const duration = 3000;
-    setTimeout(() => {
-        alertDiv.classList.remove('show');
-        setTimeout(() => alertDiv.remove(), 150);
-    }, duration);
-}
-
 const showErrorMessage = (message) => {
     const alertDiv = document.createElement('div');
     alertDiv.className = 'alert alert-danger alert-dismissible fade show';
@@ -39,7 +18,7 @@ const showErrorMessage = (message) => {
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `;
 
-    const container = document.getElementById('successful_registration');
+    const container = document.getElementById('successful_login');
     container.innerHTML = '';
 
     container.appendChild(alertDiv);
@@ -66,13 +45,7 @@ const validateIfEmpty = (email, password) => {
 const validateInputs = (email, password) => {
     errors = [];
     
-    if(!validateIfEmpty(firstName, lastName, password, confirmPassword,
-        email)) {
-        showErrorMessage(errors.join("\n"));
-        return false;
-    }
-
-    if(!validatePassword(password, confirmPassword)) {
+    if(!validateIfEmpty(email, password)) {
         showErrorMessage(errors.join("\n"));
         return false;
     }
@@ -87,11 +60,12 @@ const resetInput = () => {
 
 const loginUserToXML = () => {
     if ((xHRObject.readyState == 4) && (xHRObject.status == 200)) {
-        if(xHRObject.responseText.includes("Your email is not registered.")) {
+        if(xHRObject.responseText.includes("Login Failed")) {
             showErrorMessage(xHRObject.responseText);
             resetInput();
         } else {
-            showSuccessMessage(xHRObject.responseText);
+            //showSuccessMessage(xHRObject.responseText);
+            window.location = 'buying.htm';
         }
 	}
 }
@@ -113,7 +87,7 @@ const loginUser = () => {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('customer-form');
+    const form = document.getElementById('login-form');
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         loginUser();

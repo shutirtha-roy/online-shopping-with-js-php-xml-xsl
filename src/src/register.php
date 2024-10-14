@@ -1,6 +1,4 @@
 <?php
-header('Content-Type: text/xml');
-
 include 'constants/account-service-contants.php';
 include 'helpers/account_validation.php';
 include 'service/account_service.php';
@@ -28,7 +26,7 @@ function hasUniqueEmail($email) {
 
 function registerUser($first_name, $last_name, $email, $password, $confirmPassword, $phone) {
     $hasCorrectInput = hasUserEnteredCorrectInputs($first_name, $last_name, 
-        $email, $password, $confirmPassword, $phone); 
+        $email, $password, $confirmPassword, $phone);
 	
     if(!$hasCorrectInput['success']) {
         return false;
@@ -104,20 +102,28 @@ if(isset($_GET["fname"]) && isset($_GET["lname"]) && isset($_GET["email"])
 	$confirmPassword = $_GET["confirm_password"];
 	$phone = $_GET["phone"];
 
-	if(!hasUniqueEmail($email)) {
-		echo("Your email is already registered.");
-	} else {
-		$isUserRegistered = registerUser($first_name, $last_name, 
-		$email, $password, $confirmPassword, $phone);
-
+	try{
+		if(!hasUniqueEmail($email)) {
+			echo("Your email is already registered.");
+		} else {
+			$isUserRegistered = registerUser($first_name, $last_name, 
+			$email, $password, $confirmPassword, $phone);
 	
-		if ($isUserRegistered) {
-			echo("Dear $first_name, you have successfully registered with your email: $email!");
-		} 
-
-		if (!$isUserRegistered) {
-			echo("Invalid Validation");
+		
+			if ($isUserRegistered) {
+				echo("Dear $first_name, you have successfully registered with your email: $email!");
+			} 
+	
+			if (!$isUserRegistered) {
+				echo("Invalid Validation");
+			}
 		}
 	}
+	catch (Exception $e) {
+		echo($e);
+	}
+	
+} else {
+	echo ("The user could not be registered!");
 }
 ?>
