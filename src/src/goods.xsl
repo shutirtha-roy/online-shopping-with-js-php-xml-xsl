@@ -17,7 +17,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <xsl:apply-templates select="items/item[quantity_total > quantity_onhold]"/>
+                    <xsl:apply-templates select="items/item[(quantity_available) > 0]"/>
                 </tbody>
             </table>
 
@@ -32,7 +32,6 @@
                     </tr>
                 </thead>
                 <tbody id="cartBody">
-                    <!-- Cart items will be dynamically added here by JavaScript -->
                 </tbody>
                 <tfoot>
                     <tr>
@@ -47,6 +46,7 @@
     </xsl:template>
 
     <xsl:template match="item">
+        <xsl:variable name="available_quantity" select="quantity_available"/>
         <tr>
             <td><xsl:value-of select="item_number"/></td>
             <td><xsl:value-of select="item_name"/></td>
@@ -61,7 +61,7 @@
                 </xsl:choose>
             </td>
             <td>$<xsl:value-of select="price"/></td>
-            <td><xsl:value-of select="quantity_total - quantity_onhold"/></td>
+            <td><xsl:value-of select="$available_quantity"/></td>
             <td>
                 <button class="btn btn-primary add-to-cart" data-item-number="{item_number}">
                     Add one to cart

@@ -7,7 +7,11 @@ const createXHRObject = () => {
 
 let errors = [];
 var xHRObject = createXHRObject();
-let cart = {};
+let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
 
 function updateShoppingCatalog() {
     var url = 'buying.php?action=get_catalog';
@@ -19,6 +23,7 @@ function updateShoppingCatalog() {
             updateCartDisplay();
             attachAddToCartListeners();
             attachPurchaseButtonListeners();
+            console.log(cart);
         }
     };
     xHRObject.send(null);
@@ -42,7 +47,7 @@ function addToCart(itemNumber) {
             const response = xHRObject.responseText;
             console.log("Add to cart response:", response); // Debug log
             if (response.startsWith("Success")) {
-                const [_, price] = response.split("|");
+                const [_, price, availableQuantity] = response.split("|");
                 if (cart[itemNumber]) {
                     cart[itemNumber].quantity++;
                 } else {
@@ -52,6 +57,16 @@ function addToCart(itemNumber) {
                     };
                 }
                 updateCartDisplay();
+                
+                if (parseInt(availableQuantity) < 0) {
+                    alert("Sorry, this item is not available for sale");
+                    const addButton = document.querySelector(`.add-to-cart[data-item-number="${itemNumber}"]`);
+                    if (addButton) {
+                        addButton.disabled = true;
+                        addButton.textContent = "Out of Stock";
+                    }
+                }
+                
                 updateShoppingCatalog();
             } else {
                 alert(response);
@@ -81,6 +96,7 @@ function updateCartDisplay() {
 
     document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
     attachRemoveFromCartListeners();
+    saveCart();
 }
 
 function attachRemoveFromCartListeners() {
@@ -106,6 +122,7 @@ function removeFromCart(itemNumber) {
                 } else {
                     delete cart[itemNumber];
                 }
+                saveCart();
                 updateCartDisplay();
                 updateShoppingCatalog();
             } else {
@@ -125,6 +142,7 @@ function confirmPurchase() {
             console.log("Confirm purchase response:", response);
             alert(response);
             cart = {};
+            saveCart();
             updateCartDisplay();
             updateShoppingCatalog();
         }
@@ -141,6 +159,7 @@ function cancelPurchase() {
             console.log("Cancel purchase response:", response); // Debug log
             alert(response);
             cart = {};
+            saveCart();
             updateCartDisplay();
             updateShoppingCatalog();
         }

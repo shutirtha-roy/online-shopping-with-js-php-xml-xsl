@@ -35,15 +35,19 @@ function addToCart($itemNumber) {
     $items = $doc->getElementsByTagName('item');
     foreach ($items as $item) {
         if ($item->getElementsByTagName('item_number')->item(0)->nodeValue == $itemNumber) {
-            $quantityTotal = intval($item->getElementsByTagName('quantity_total')->item(0)->nodeValue);
+            $availableQuantity = intval($item->getElementsByTagName('quantity_available')->item(0)->nodeValue);
             $quantityOnhold = intval($item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue);
-            $availableQuantity = $quantityTotal - $quantityOnhold;
+            $quantitySold = intval($item->getElementsByTagName('quantity_sold')->item(0)->nodeValue);
             
             if ($availableQuantity > 0) {
-                $item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue = $quantityOnhold + 1;
-                saveXML($doc);
+                $newQuantityOnhold = $quantityOnhold + 1;
+                $item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue = $newQuantityOnhold;
                 $price = $item->getElementsByTagName('price')->item(0)->nodeValue;
-                return "Success|$price";
+                $newAvailableQuantity = $availableQuantity - 1;
+                $item->getElementsByTagName('quantity_available')->item(0)->nodeValue = $newAvailableQuantity;
+                saveXML($doc);
+                
+                return "Success|$price|$newAvailableQuantity";
             } else {
                 return "Sorry, this item is not available for sale";
             }
@@ -57,9 +61,12 @@ function removeFromCart($itemNumber, $quantity) {
     $items = $doc->getElementsByTagName('item');
     foreach ($items as $item) {
         if ($item->getElementsByTagName('item_number')->item(0)->nodeValue == $itemNumber) {
+            $quantityAvailable = intval($item->getElementsByTagName('quantity_available')->item(0)->nodeValue);
+            $quantityAvailable += 1;
             $quantityOnhold = intval($item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue);
             $newQuantityOnhold = max(0, $quantityOnhold - $quantity);
             $item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue = $newQuantityOnhold;
+            $item->getElementsByTagName('quantity_available')->item(0)->nodeValue = $quantityAvailable;
             saveXML($doc);
             return "Success";
         }
@@ -75,13 +82,11 @@ function confirmPurchase($cart) {
     foreach ($cart as $itemNumber => $itemData) {
         foreach ($items as $item) {
             if ($item->getElementsByTagName('item_number')->item(0)->nodeValue == $itemNumber) {
-                $quantityTotal = intval($item->getElementsByTagName('quantity_total')->item(0)->nodeValue);
                 $quantityOnhold = intval($item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue);
                 $quantitySold = intval($item->getElementsByTagName('quantity_sold')->item(0)->nodeValue);
                 $price = floatval($item->getElementsByTagName('price')->item(0)->nodeValue);
                 
                 $purchaseQuantity = min($itemData['quantity'], $quantityOnhold);
-                $item->getElementsByTagName('quantity_total')->item(0)->nodeValue = $quantityTotal - $purchaseQuantity;
                 $item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue = $quantityOnhold - $purchaseQuantity;
                 $item->getElementsByTagName('quantity_sold')->item(0)->nodeValue = $quantitySold + $purchaseQuantity;
                 
@@ -101,8 +106,10 @@ function cancelPurchase($cart) {
     foreach ($cart as $itemNumber => $itemData) {
         foreach ($items as $item) {
             if ($item->getElementsByTagName('item_number')->item(0)->nodeValue == $itemNumber) {
+                $availableQuantity = intval($item->getElementsByTagName('quantity_available')->item(0)->nodeValue);
                 $quantityOnhold = intval($item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue);
                 $item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue = max(0, $quantityOnhold - $itemData['quantity']);
+                $item->getElementsByTagName('quantity_available')->item(0)->nodeValue = max(0, $availableQuantity + $itemData['quantity']);
                 break;
             }
         }
