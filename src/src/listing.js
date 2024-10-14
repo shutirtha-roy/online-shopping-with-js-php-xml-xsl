@@ -8,16 +8,6 @@ const createXHRObject = () => {
 let errors = [];
 var xHRObject = createXHRObject();
 
-const showSuccessMessage = (message) => {
-    const container = document.getElementById('item_message');
-    container.innerHTML = message;
-}
-
-const showErrorMessage = (message) => {
-    const container = document.getElementById('item_message');
-    container.innerHTML = message;
-}
-
 const validateNotEmpty = (fieldName, value) => {
     if (!value) {
         errors.push(`${fieldName} is required.`);
@@ -56,11 +46,13 @@ const validateInputs = (itemName, itemPrice, itemQuantity, itemDescription) => {
 const addItemToXML = () => {
     if ((xHRObject.readyState == 4) && (xHRObject.status == 200)) {
         if(xHRObject.responseText.includes("item has been listed in the system")) {
-            showSuccessMessage(xHRObject.responseText);
+            const container = document.getElementById('item_message');
+            container.innerHTML = xHRObject.responseText;
             //POPULATE DATA
             resetInput();
         } else {
-            showErrorMessage(xHRObject.responseText);
+            const container = document.getElementById('item_message');
+            container.innerHTML = xHRObject.responseText;
         }
 	}
 }
