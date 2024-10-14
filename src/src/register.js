@@ -125,6 +125,14 @@ const showErrorMessage = (message) => {
     }, duration);
 }
 
+const resetInput = () => {
+    document.getElementById('fname').value = '';
+    document.getElementById('lname').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('confirm_password').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('phone').value = '';
+}
 
 const registerUserToXML = () => {
     if ((xHRObject.readyState == 4) && (xHRObject.status == 200)) {
@@ -132,6 +140,7 @@ const registerUserToXML = () => {
             showErrorMessage(xHRObject.responseText);
         } else {
             showSuccessMessage(xHRObject.responseText);
+            resetInput();
         }
 	}
 }
@@ -158,3 +167,11 @@ const registerUser = () => {
 	xHRObject.send(null);
     
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('registrationForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        registerUser();
+    });
+});

@@ -34,8 +34,6 @@ function registerUser($first_name, $last_name, $email, $password, $confirmPasswo
         return false;
     }
 
-	// echo "edsw $first_name $last_name, $email, $password, $confirmPassword, $phone";
-
     $hasCreatedCustomerXML = createXMLOfCustomer($first_name, $last_name, 
 		$email, $password, $confirmPassword, $phone);
 
@@ -108,19 +106,18 @@ if(isset($_GET["fname"]) && isset($_GET["lname"]) && isset($_GET["email"])
 
 	if(!hasUniqueEmail($email)) {
 		echo("Your email is already registered.");
-		return; 
-	}
-
-	$isUserRegistered = registerUser($first_name, $last_name, 
+	} else {
+		$isUserRegistered = registerUser($first_name, $last_name, 
 		$email, $password, $confirmPassword, $phone);
 
 	
-	if ($isUserRegistered) {
-		echo("Dear $first_name, you have successfully registered!");
-	} 
+		if ($isUserRegistered) {
+			echo("Dear $first_name, you have successfully registered with your email: $email!");
+		} 
 
-	if (!$isUserRegistered) {
-		echo("Invalid Validation");
+		if (!$isUserRegistered) {
+			echo("Invalid Validation");
+		}
 	}
 }
 ?>

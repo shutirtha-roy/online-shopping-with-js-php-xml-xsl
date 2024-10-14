@@ -1,0 +1,22 @@
+/* 
+    Name: Shutirtha Roy
+    Student ID: 105008711
+    Course: COS80021 Web Application Development
+    Function: This file contains the css of the register.php page. 
+*/
+
+.customer-login-form {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-top: 50px;
+}
+.btn-login {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+.btn-login:hover {
+    background-color: #0b5ed7;
+    border-color: #0b5ed7;
+}
