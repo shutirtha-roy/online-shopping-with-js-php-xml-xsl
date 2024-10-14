@@ -9,45 +9,13 @@ let errors = [];
 var xHRObject = createXHRObject();
 
 const showSuccessMessage = (message) => {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = 'alert alert-success alert-dismissible fade show';
-    alertDiv.setAttribute('role', 'alert');
-    alertDiv.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    `;
-
-    const container = document.getElementById('login_message');
-    container.innerHTML = '';
-
-    container.appendChild(alertDiv);
-
-    const duration = 3000;
-    setTimeout(() => {
-        alertDiv.classList.remove('show');
-        setTimeout(() => alertDiv.remove(), 150);
-    }, duration);
+    const container = document.getElementById('item_message');
+    container.innerHTML = message;
 }
 
 const showErrorMessage = (message) => {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
-    alertDiv.setAttribute('role', 'alert');
-    alertDiv.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    `;
-
-    const container = document.getElementById('login_message');
-    container.innerHTML = '';
-
-    container.appendChild(alertDiv);
-
-    const duration = 3000;
-    setTimeout(() => {
-        alertDiv.classList.remove('show');
-        setTimeout(() => alertDiv.remove(), 150);
-    }, duration);
+    const container = document.getElementById('item_message');
+    container.innerHTML = message;
 }
 
 const validateNotEmpty = (fieldName, value) => {
@@ -57,7 +25,7 @@ const validateNotEmpty = (fieldName, value) => {
 }
 
 const validateNumericalInput = (fieldName, value) => {
-    if (!isNaN(value)) {
+    if (!isNaN(value) || value < 0) {
         errors.push(`${fieldName} is invalid.`);
     }
 }
@@ -85,6 +53,18 @@ const validateInputs = (itemName, itemPrice, itemQuantity, itemDescription) => {
     return true;
 }
 
+const addItemToXML = () => {
+    if ((xHRObject.readyState == 4) && (xHRObject.status == 200)) {
+        if(xHRObject.responseText.includes("item has been listed in the system")) {
+            showSuccessMessage(xHRObject.responseText);
+            //POPULATE DATA
+            resetInput();
+        } else {
+            showErrorMessage(xHRObject.responseText);
+        }
+	}
+}
+
 const addItem = () => {
     const itemName = document.getElementById('itemName').value.trim();
     const itemPrice = parseFloat(document.getElementById('itemPrice').value);
@@ -94,6 +74,13 @@ const addItem = () => {
     if(!validateInputs(itemName, itemPrice, itemQuantity, itemDescription)) {
         return;
     };
+
+    var url = `listing.php?itemName=${itemName}&itemPrice=${itemPrice}
+        &itemQuantity=${itemQuantity}&itemDescription=${itemDescription}&id=${Number(new Date)}`;
+    const isAsynchronous = true;
+    xHRObject.open("POST", url, isAsynchronous);
+    xHRObject.onreadystatechange = addItemToXML;
+	xHRObject.send(null);
 }
 
 const resetInput = () => {
@@ -104,7 +91,7 @@ const resetInput = () => {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('mlogin-form');
+    const form = document.getElementById('listing-form');
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         addItem();

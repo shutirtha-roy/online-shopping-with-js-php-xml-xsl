@@ -1,59 +1,87 @@
 <?php
 header('Content-Type: text/xml');
 
-function generateItemNumber() {
-    // Simple implementation - you might want to make this more sophisticated
-    return 'ITM' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+include 'constants/listing-service-contants.php';
+include 'helpers/listing_validation.php';
+include 'service/listing_service.php';
+
+function getTotalItemLength() {
+	$xmlFile = '../../data/goods.xml';
+
+	if (!file_exists($xmlFile)){
+		return 0;
+	}
+
+	$doc = new DOMDocument();
+	$doc->load($xmlFile);
+	$items = $doc->getElementsByTagName('item');
+	$totalItems = $items->length;
+	return $totalItems;
 }
 
-function addItemToXML($item) {
-    $xmlFile = '../../data/goods.xml';
-    
-    $doc = new DomDocument();
-		
-    if (!file_exists($xmlfile)){
-        $customers = $doc->createElement('items');
-        $doc->appendChild($customers);
-    }
-    else {
-        $doc->preserveWhiteSpace = FALSE; 
-        $doc->load($xmlfile);  
-    }
+function addItemToXML($itemName, $itemPrice, $itemQuantity, $itemQuantityOnHold, $itemQuantitySold, $itemDescription) {
+    try {
+        $xmlFile = '../../data/goods.xml';
+        
+        $doc = new DomDocument();
+            
+        if (!file_exists($xmlFile)){
+            $customers = $doc->createElement('items');
+            $doc->appendChild($customers);
+        }
+        else {
+            $doc->preserveWhiteSpace = FALSE; 
+            $doc->load($xmlFile);  
+        }
 
-    $items = $doc->getElementsByTagName('items')->item(0);
-    
-    $newItem = $xml->addChild('item');
-    $newItem->addChild('itemNumber', $item['itemNumber']);
-    $newItem->addChild('name', $item['name']);
-    $newItem->addChild('price', $item['price']);
-    $newItem->addChild('quantity', $item['quantity']);
-    $newItem->addChild('description', $item['description']);
-    $newItem->addChild('quantityOnHold', 0);
-    $newItem->addChild('quantitySold', 0);
-    
-    $xml->asXML($xmlFile);
+        $items = $doc->getElementsByTagName('items')->item(0);
+        $item = $doc->createElement('item');
+        $items->appendChild($item);
+        
+        $item_id = generateItemNumber(getTotalItemLength());
+
+        $itemData = prepareItemData($item_id, $itemName, $itemPrice, $itemQuantity, $itemQuantityOnHold, $itemQuantitySold, $itemDescription);
+        
+        foreach ($itemData as $key => $value) {
+            createItemXmlElement($doc, $item, $key, $value);
+        }
+
+        $doc->formatOutput = true;
+        $customerXML = $doc->save($xmlFile);  
+
+        return $item_id;
+    }
+	catch (Exception $e) {
+		return "INVALID";
+	}
 }
 
-// Process the incoming data
-$itemName = filter_input(INPUT_POST, 'itemName', FILTER_SANITIZE_STRING);
-$itemPrice = filter_input(INPUT_POST, 'itemPrice', FILTER_VALIDATE_FLOAT);
-$itemQuantity = filter_input(INPUT_POST, 'itemQuantity', FILTER_VALIDATE_INT);
-$itemDescription = filter_input(INPUT_POST, 'itemDescription', FILTER_SANITIZE_STRING);
+function addItem($itemName, $itemPrice, $itemQuantity, $itemDescription) {
+    $hasCorrectInput = hasCorrectItemInputs($itemName, $itemPrice, $itemQuantity, $itemDescription); 
+	
+    if(!$hasCorrectInput['success']) {
+        echo $hasCorrectInput['errors'];
+        return;
+    }
 
-if ($itemName && $itemPrice && $itemQuantity && $itemDescription) {
-    $itemNumber = generateItemNumber();
-    $item = [
-        'itemNumber' => $itemNumber,
-        'name' => $itemName,
-        'price' => $itemPrice,
-        'quantity' => $itemQuantity,
-        'description' => $itemDescription
-    ];
-    
-    addItemToXML($item);
-    
-    echo json_encode(['success' => true, 'itemNumber' => $itemNumber]);
-} else {
-    echo json_encode(['success' => false, 'message' => 'Invalid input data.']);
+    $item_number = addItemToXML($itemName, $itemPrice, $itemQuantity, 0, 0, $itemDescription);
+
+    if($item_number != "INVALID") {
+        echo "The item has been listed in the system, and the item number is:$item_number";
+    }
+
+    if($item_number == "INVALID") {
+        echo ERROR_XML_CREATION;
+    }
+}
+
+if(isset($_GET["itemName"]) && isset($_GET["itemPrice"]) 
+    && isset($_GET["itemQuantity"]) && isset($_GET["itemDescription"])) {
+    $itemName = $_GET["itemName"];
+    $itemPrice = floatval($_GET["itemPrice"]);
+    $itemQuantity = intval($_GET["itemQuantity"]);
+    $itemDescription = $_GET["itemDescription"];
+
+    addItem($itemName, $itemPrice, $itemQuantity, $itemDescription);
 }
 ?>

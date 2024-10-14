@@ -11,28 +11,18 @@
             return ['success' => false, 'errors' => ERROR_FIRST_NAME_REQUIRED];
         }
 
-        //echo "NAME IS CORRECT";
-
         if(!matchName($last_name)) {
             return ['success' => false, 'errors' => ERROR_LAST_NAME_REQUIRED];
         }
-
-        //echo "LAST NAME IS CORRECT";
         
         if(!matchEmail($email)) {
             return ['success' => false, 'errors' => ERROR_EMAIL_INVALID];
         }
 
-        //echo "EMAIL IS CORRECT";
-
         if (!matchPassword($password, $confirmPassword)) {
             echo "$password, $confirmPassword";
             return ['success' => false, 'errors' => ERROR_PASSWORDS_DO_NOT_MATCH];
         }
-
-        // if (!matchPhoneNumber($phone)) {
-        //     return ['success' => false, 'errors' => ERROR_PHONE_INVALID];
-        // }
 
         return ['success' => true, 'errors' => ''];
     }
