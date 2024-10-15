@@ -1,4 +1,12 @@
 <?php
+/*
+    Name: Shutirtha Roy
+    Student ID: 105008711
+    Course: COS80021 Web Application Development
+    Function: This file is used to login the customer with the email and password, by searching from the xml file. 
+    If the customer is matched with the id and password then a success message is sent back to the client-side JavaScript.
+*/
+
 include 'constants/account-service-contants.php';
 include 'helpers/account_validation.php';
 include 'service/account_service.php';

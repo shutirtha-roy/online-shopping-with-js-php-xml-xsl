@@ -1,3 +1,12 @@
+// Name: Shutirtha Roy
+// Student ID: 105008711
+// Course: COS80021 Web Application Development
+// Function: The file handles the total items available to purchase and the shopping cart. It has AJAX 
+//functionality for catalog display, adding to a cart, removing from it, and updating the cart, 
+//as well as processing or cancelling a purchase. 
+//It communicates with a server-side PHP script in order to get or set data and performs 
+//local storage to maintain the cart data and in real time updates to the user interface.
+
 const createXHRObject = () => {
     return window.XMLHttpRequest ? new XMLHttpRequest() 
                 : (window.ActiveXObject 

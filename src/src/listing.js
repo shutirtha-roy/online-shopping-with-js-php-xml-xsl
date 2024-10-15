@@ -1,3 +1,10 @@
+// Name: Shutirtha Roy
+// Student ID: 105008711
+// Course: COS80021 Web Application Development
+// Function: The file adds new items in the xml through ajax. 
+//It communicates with a server-side PHP script in order to set item data 
+//and gets back success message to show them in the listing.htm UI.
+
 const createXHRObject = () => {
     return window.XMLHttpRequest ? new XMLHttpRequest() 
                 : (window.ActiveXObject 

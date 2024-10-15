@@ -4,7 +4,7 @@
     Student ID: 105008711
     Course: COS80021 Web Application Development
     Function: This file contains all the constants of 
-    admin_service.php and request_service.php. 
+    listing_service.php.
 */
 
 define('ITEM_NUMBER_INDEX', 'IBO-');

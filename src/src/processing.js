@@ -1,3 +1,12 @@
+// Name: Shutirtha Roy
+// Student ID: 105008711
+// Course: COS80021 Web Application Development
+// Function: This JavaScript code loads all the items which are sold from the server side php processing.php and 
+// when the Process button is clicked it sends a request to update all the items based on the quantities available,
+// quantities on hold, quantities sold.
+
+
+
 const createXHRObject = () => {
     return window.XMLHttpRequest ? new XMLHttpRequest() 
                 : (window.ActiveXObject 

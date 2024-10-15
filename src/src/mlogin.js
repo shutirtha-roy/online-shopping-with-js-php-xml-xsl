@@ -1,3 +1,9 @@
+// Name: Shutirtha Roy
+// Student ID: 105008711
+// Course: COS80021 Web Application Development
+// Function: The file logins manager with manager id and password from the client side by communicating
+// with a server-side PHP script in order to check if the manager exists
+//and gets back success message to login the manager and redirect to buying.htm.
 
 const createXHRObject = () => {
     return window.XMLHttpRequest ? new XMLHttpRequest() 

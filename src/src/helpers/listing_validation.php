@@ -4,7 +4,7 @@
         Student ID: 105008711
         Course: COS80021 Web Application Development
         Function: This file contains all the validations of 
-        request_service.php. 
+        listing.php.
     */
     function hasCorrectItemInputs($itemName, $itemPrice, $itemQuantity, $itemDescription) {
         if(!matchEmptyItem($itemName)) {

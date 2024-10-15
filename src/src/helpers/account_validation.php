@@ -3,9 +3,10 @@
         Name: Shutirtha Roy
         Student ID: 105008711
         Course: COS80021 Web Application Development
-        Function: This file contains all the account validations of 
+        Function: This file contains all the account validations of register.php
         account_service.php. 
     */
+    
     function hasUserEnteredCorrectInputs($first_name, $last_name, $email, $password, $confirmPassword, $phone) {
         if(!matchName(trim($first_name))) {
             return ['success' => false, 'errors' => ERROR_FIRST_NAME_REQUIRED];

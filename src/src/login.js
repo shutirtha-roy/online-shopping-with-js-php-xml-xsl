@@ -1,3 +1,9 @@
+// Name: Shutirtha Roy
+// Student ID: 105008711
+// Course: COS80021 Web Application Development
+// Function: The file logins customer with email and password from the client side by communicating
+// with a server-side PHP script in order to check if the customer exists
+//and gets back success message to login the customer and redirect to buying.htm.
 
 const createXHRObject = () => {
     return window.XMLHttpRequest ? new XMLHttpRequest() 

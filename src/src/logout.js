@@ -1,3 +1,9 @@
+// Name: Shutirtha Roy
+// Student ID: 105008711
+// Course: COS80021 Web Application Development
+// Function: The file logouts either manager or customer and sends the ID from the server side php 
+// logout.php through the session and sets to the UI logout.htm.
+
 const createXHRObjectLogout = () => {
     return window.XMLHttpRequest ? new XMLHttpRequest() 
                 : (window.ActiveXObject 
