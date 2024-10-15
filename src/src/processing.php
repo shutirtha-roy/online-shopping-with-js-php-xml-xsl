@@ -23,13 +23,12 @@ function getSoldItems() {
             $price = $item->getElementsByTagName('price')->item(0)->nodeValue;
             $quantityTotal = intval($item->getElementsByTagName('quantity_available')->item(0)->nodeValue);
             $quantityOnHold = intval($item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue);
-            $quantityAvailable = $quantityTotal - $quantityOnHold - $quantitySold;
             
             $output .= "<tr>
                 <td>{$itemNumber}</td>
                 <td>{$itemName}</td>
                 <td>\${$price}</td>
-                <td>{$quantityAvailable}</td>
+                <td>{$quantityTotal }</td>
                 <td>{$quantityOnHold}</td>
                 <td>{$quantitySold}</td>
             </tr>";
@@ -47,25 +46,16 @@ function processItems() {
         $quantitySold = intval($item->getElementsByTagName('quantity_sold')->item(0)->nodeValue);
         
         if ($quantitySold > 0) {
-            // Decrease the quantity_total by the amount sold
-            $quantityTotal = intval($item->getElementsByTagName('quantity_available')->item(0)->nodeValue);
-            $newQuantityTotal = $quantityTotal - $quantitySold;
-            $item->getElementsByTagName('quantity_available')->item(0)->nodeValue = $newQuantityTotal;
-
-            // Clear the quantity sold
             $item->getElementsByTagName('quantity_sold')->item(0)->nodeValue = 0;
-            
-            // Get the quantity on hold
+            $quantityAvailable = intval($item->getElementsByTagName('quantity_available')->item(0)->nodeValue);
             $quantityOnHold = intval($item->getElementsByTagName('quantity_onhold')->item(0)->nodeValue);
             
-            // Check if the item should be removed
-            if ($newQuantityTotal == 0 && $quantityOnHold == 0) {
+            if ($quantityAvailable == 0 && $quantityOnHold == 0) {
                 $itemsToRemove[] = $item;
             }
         }
     }
 
-    // Remove items that have been completely sold
     foreach ($itemsToRemove as $item) {
         $item->parentNode->removeChild($item);
     }
@@ -76,15 +66,12 @@ function processItems() {
 }
 
 if (isset($_GET['action'])) {
-    switch ($_GET['action']) {
-        case 'get_sold_items':
-            getSoldItems();
-            break;
-        case 'process_items':
-            processItems();
-            break;
-        default:
-            echo "Invalid action";
+    if ($_GET['action'] === 'get_sold_items') {
+        getSoldItems();
+    } elseif ($_GET['action'] === 'process_items') {
+        processItems();
+    } else {
+        echo "Invalid action";
     }
 } else {
     echo "No action specified";

@@ -9,11 +9,11 @@ let errors = [];
 var xHRObject = createXHRObject();
 let cart = JSON.parse(localStorage.getItem('cart')) || {};
 
-function saveCart() {
+const saveCart = () => {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-function updateShoppingCatalog() {
+const updateShoppingCatalog = () => {
     var url = 'buying.php?action=get_catalog';
     isAsynchronous = true;
     xHRObject.open('GET', url, isAsynchronous);
@@ -29,7 +29,7 @@ function updateShoppingCatalog() {
     xHRObject.send(null);
 }
 
-function attachAddToCartListeners() {
+const attachAddToCartListeners = () => {
     const addButtons = document.querySelectorAll('.add-to-cart');
     addButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -39,13 +39,13 @@ function attachAddToCartListeners() {
     });
 }
 
-function addToCart(itemNumber) {
+const addToCart = (itemNumber) => {
     var url = `buying.php?action=add_to_cart&item_number=${itemNumber}`;
     xHRObject.open('GET', url, true);
     xHRObject.onreadystatechange = function() {
         if (xHRObject.readyState === 4 && xHRObject.status === 200) {
             const response = xHRObject.responseText;
-            console.log("Add to cart response:", response); // Debug log
+            console.log("Add to cart response:", response);
             if (response.startsWith("Success")) {
                 const [_, price, availableQuantity] = response.split("|");
                 if (cart[itemNumber]) {
@@ -76,8 +76,8 @@ function addToCart(itemNumber) {
     xHRObject.send(null);
 }
 
-function updateCartDisplay() {
-    console.log("Updating cart display. Current cart:", cart); // Debug log
+const updateCartDisplay = () => {
+    console.log("Updating cart display. Current cart:", cart);
     const cartBody = document.getElementById('cartBody');
     cartBody.innerHTML = '';
     let total = 0;
@@ -99,7 +99,7 @@ function updateCartDisplay() {
     saveCart();
 }
 
-function attachRemoveFromCartListeners() {
+const attachRemoveFromCartListeners = () => {
     const removeButtons = document.querySelectorAll('.remove-from-cart');
     removeButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -109,13 +109,13 @@ function attachRemoveFromCartListeners() {
     });
 }
 
-function removeFromCart(itemNumber) {
+const removeFromCart = (itemNumber) => {
     var url = `buying.php?action=remove_from_cart&item_number=${itemNumber}&quantity=1`;
     xHRObject.open('GET', url, true);
     xHRObject.onreadystatechange = function() {
         if (xHRObject.readyState === 4 && xHRObject.status === 200) {
             const response = xHRObject.responseText;
-            console.log("Remove from cart response:", response); // Debug log
+            console.log("Remove from cart response:", response);
             if (response === "Success") {
                 if (cart[itemNumber].quantity > 1) {
                     cart[itemNumber].quantity--;
@@ -133,7 +133,7 @@ function removeFromCart(itemNumber) {
     xHRObject.send(null);
 }
 
-function confirmPurchase() {
+const confirmPurchase = () => {
     var url = `buying.php?action=confirm_purchase&cart=${JSON.stringify(cart)}`;
     xHRObject.open('GET', url, true);
     xHRObject.onreadystatechange = function() {
@@ -150,13 +150,13 @@ function confirmPurchase() {
     xHRObject.send(null);
 }
 
-function cancelPurchase() {
+const cancelPurchase = () => {
     var url = `buying.php?action=cancel_purchase&cart=${JSON.stringify(cart)}`;
     xHRObject.open('GET', url, true);
     xHRObject.onreadystatechange = function() {
         if (xHRObject.readyState === 4 && xHRObject.status === 200) {
             const response = xHRObject.responseText;
-            console.log("Cancel purchase response:", response); // Debug log
+            console.log("Cancel purchase response:", response);
             alert(response);
             cart = {};
             saveCart();
@@ -167,7 +167,7 @@ function cancelPurchase() {
     xHRObject.send(null);
 }
 
-function attachPurchaseButtonListeners() {
+const attachPurchaseButtonListeners = () => {
     const confirmButton = document.getElementById('confirmPurchase');
     const cancelButton = document.getElementById('cancelPurchase');
     

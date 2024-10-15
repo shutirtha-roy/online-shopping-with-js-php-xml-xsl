@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Processing Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="processing.js"></script>
     <script type="text/javascript" src="logout.js"></script>
 </head>
 <body>
@@ -44,50 +45,9 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Items will be loaded here -->
             </tbody>
         </table>
         <button id="processButton" class="btn btn-primary">Process</button>
     </div>
-
-    <script>
-    const createXHRObject = () => {
-        return window.XMLHttpRequest ? new XMLHttpRequest() 
-                    : (window.ActiveXObject 
-                    ? new ActiveXObject("Microsoft.XMLHTTP") 
-                    : null)
-    }
-
-    let errors = [];
-    var xHRObject = createXHRObject();
-
-    function loadItems() {
-        var url = 'processing.php?action=get_sold_items';
-        xHRObject.open('GET', url, true);
-        xHRObject.onreadystatechange = function() {
-            if (xHRObject.readyState === 4 && xHRObject.status === 200) {
-                document.getElementById('itemsTable').getElementsByTagName('tbody')[0].innerHTML = xHRObject.responseText;
-            }
-        };
-        xHRObject.send(null);
-    }
-
-    function processItems() {
-        var url = 'processing.php?action=process_items';
-        xHRObject.open('POST', url, true);
-        xHRObject.onreadystatechange = function() {
-            if (xHRObject.readyState === 4 && xHRObject.status === 200) {
-                alert(xHRObject.responseText);
-                loadItems();
-            }
-        };
-        xHRObject.send(null);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        loadItems();
-        document.getElementById('processButton').addEventListener('click', processItems);
-    });
-    </script>
 </body>
 </html>

@@ -1,7 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 $xmlFile = "../../data/goods.xml";
 
 function loadXML() {
@@ -123,48 +120,41 @@ try {
     if(isset($_GET["action"])) {
         $action = $_GET["action"];
 
-        switch ($action) {
-            case 'get_catalog':
-                echo getCatalog();
-                break;
-            case 'add_to_cart':
-                if(isset($_GET["item_number"])) {
-                    echo addToCart($_GET["item_number"]);
-                } else {
-                    echo "Invalid request";
-                }
-                break;
-            case 'remove_from_cart':
-                if(isset($_GET["item_number"]) && isset($_GET["quantity"])) {
-                    echo removeFromCart($_GET["item_number"], intval($_GET["quantity"]));
-                } else {
-                    echo "Invalid request";
-                }
-                break;
-            case 'confirm_purchase':
-                if(isset($_GET["cart"])) {
-                    $cart = json_decode($_GET["cart"], true);
-                    echo confirmPurchase($cart);
-                } else {
-                    echo "Invalid request";
-                }
-                break;
-            case 'cancel_purchase':
-                if(isset($_GET["cart"])) {
-                    $cart = json_decode($_GET["cart"], true);
-                    echo cancelPurchase($cart);
-                } else {
-                    echo "Invalid request";
-                }
-                break;
-            default:
-                echo "Invalid action";
+        if ($action == 'get_catalog') {
+            echo getCatalog();
+        } elseif ($action == 'add_to_cart') {
+            if(isset($_GET["item_number"])) {
+                echo addToCart($_GET["item_number"]);
+            } else {
+                echo "Invalid request";
+            }
+        } elseif ($action == 'remove_from_cart') {
+            if(isset($_GET["item_number"]) && isset($_GET["quantity"])) {
+                echo removeFromCart($_GET["item_number"], intval($_GET["quantity"]));
+            } else {
+                echo "Invalid request";
+            }
+        } elseif ($action == 'confirm_purchase') {
+            if(isset($_GET["cart"])) {
+                $cart = json_decode($_GET["cart"], true);
+                echo confirmPurchase($cart);
+            } else {
+                echo "Invalid request";
+            }
+        } elseif ($action == 'cancel_purchase') {
+            if(isset($_GET["cart"])) {
+                $cart = json_decode($_GET["cart"], true);
+                echo cancelPurchase($cart);
+            } else {
+                echo "Invalid request";
+            }
+        } else {
+            echo "Invalid action";
         }
     } else {
         echo "No action specified";
     }
 } catch (Exception $e) {
-    error_log("Error in buying.php: " . $e->getMessage());
     echo "An error occurred. Please try again later.";
 }
 ?>
