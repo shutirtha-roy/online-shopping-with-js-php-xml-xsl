@@ -33,10 +33,13 @@
 
     function getCatalog() {
         $xmlDoc = loadXML();
-        $xslDoc = new DOMDocument();
+        $xslDoc = new DOMDocument('1.0');
+        $xmlDoc->formatOutput = true;
         $xslDoc->load("goods.xsl");
+
         $proc = new XSLTProcessor();
         $proc->importStyleSheet($xslDoc);
+        
         return $proc->transformToXML($xmlDoc);
     }
 

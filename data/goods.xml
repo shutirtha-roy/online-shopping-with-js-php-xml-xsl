@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<items>
+  <item>
+    <item_number>IBO-1</item_number>
+    <item_name>Eco-Friendly Yoga Mat</item_name>
+    <price>39.99</price>
+    <quantity_available>29</quantity_available>
+    <quantity_onhold>0</quantity_onhold>
+    <quantity_sold>0</quantity_sold>
+    <description>This premium eco-friendly yoga mat is designed for maximum comfort and grip during your practice. Made from natural rubber and free of harmful chemicals, it provides excellent cushioning and support for all types of workouts. Its non-slip surface ensures stability, while the lightweight design makes it easy to transport. Ideal for yogis of all levels, this mat is perfect for home use or the studio. Choose sustainability and enhance your practice with our Eco-Friendly Yoga Mat!</description>
+  </item>
+  <item>
+    <item_number>IBO-2</item_number>
+    <item_name>Reusable Stainless Steel Water Bottle</item_name>
+    <price>29.95</price>
+    <quantity_available>38</quantity_available>
+    <quantity_onhold>0</quantity_onhold>
+    <quantity_sold>2</quantity_sold>
+    <description>Stay hydrated in style with our sleek reusable stainless steel water bottle. Featuring double-wall insulation, this bottle keeps drinks cold for up to 24 hours or hot for up to 12 hours. The wide mouth design makes it easy to fill and clean, while the BPA-free lid ensures safety. Perfect for the gym, office, or outdoor adventures, this eco-friendly bottle is a great alternative to single-use plastics!</description>
+  </item>
+  <item>
+    <item_number>IBO-3</item_number>
+    <item_name>Organic Cotton Tote Bag</item_name>
+    <price>19.99</price>
+    <quantity_available>60</quantity_available>
+    <quantity_onhold>0</quantity_onhold>
+    <quantity_sold>0</quantity_sold>
+    <description>This versatile organic cotton tote bag is perfect for shopping, beach trips, or everyday errands. Made from 100% certified organic cotton, it's durable and eco-friendly. With long handles for easy carrying and a spacious interior, this bag combines style and functionality. Show your commitment to sustainability while looking chic with our Organic Cotton Tote Bag!</description>
+  </item>
+  <item>
+    <item_number>IBO-4</item_number>
+    <item_name>Bamboo Toothbrush Set</item_name>
+    <price>14.95</price>
+    <quantity_available>48</quantity_available>
+    <quantity_onhold>0</quantity_onhold>
+    <quantity_sold>2</quantity_sold>
+    <description>Upgrade your oral care routine with our bamboo toothbrush set, featuring four biodegradable brushes. Each brush is designed with soft bristles for gentle cleaning and a sleek bamboo handle that's comfortable to hold. Say goodbye to plastic and make a positive impact on the environment with this sustainable alternative. Perfect for families or as a thoughtful gift!</description>
+  </item>
+  <item>
+    <item_number>IBO-5</item_number>
+    <item_name>Natural Soy Candle (Lemon Verbena)</item_name>
+    <price>24.99</price>
+    <quantity_available>30</quantity_available>
+    <quantity_onhold>0</quantity_onhold>
+    <quantity_sold>0</quantity_sold>
+    <description>Create a calming atmosphere with our natural soy candle infused with the refreshing scent of lemon verbena. Hand-poured and made from 100% soy wax, this candle burns cleanly and evenly, providing hours of delightful fragrance. The elegant glass container adds a touch of sophistication to any space. Perfect for relaxation or as a charming gift for loved ones!</description>
+  </item>
+</items>

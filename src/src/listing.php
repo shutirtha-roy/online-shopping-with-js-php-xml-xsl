@@ -58,6 +58,7 @@
 
             $doc->formatOutput = true;
             $customerXML = $doc->save($xmlFile);  
+            chmod('../../data/goods.xml', 0777);
 
             return $item_id;
         }

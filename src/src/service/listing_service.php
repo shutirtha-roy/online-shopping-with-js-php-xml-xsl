@@ -9,7 +9,7 @@
             'item_number' => $item_number,
             'item_name' => $item_name,
             'price' => $price,
-            'quantity_total' => $quantity_total,
+            'quantity_available' => $quantity_total,
             'quantity_onhold' => $quantity_onhold,
             'quantity_sold' => $quantity_sold,
             'description' => $description

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
 Name: Shutirtha Roy
 Student ID: 105008711
@@ -5,8 +6,6 @@ Course: COS80021 Web Application Development
 Function: This file is used to fetch the items from the XML and show the Shopping Catalog 
 where the user can add the items to cart and then confirm and cancel purchase.
 -->
-
-<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="html" indent="yes"/>
 
@@ -25,7 +24,7 @@ where the user can add the items to cart and then confirm and cancel purchase.
                     </tr>
                 </thead>
                 <tbody>
-                    <xsl:apply-templates select="items/item[(quantity_available) > 0]"/>
+                    <xsl:apply-templates select="items/item[quantity_available > 0]"/>
                 </tbody>
             </table>
 

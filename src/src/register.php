@@ -85,6 +85,7 @@ function createXMLOfCustomer($first_name, $last_name, $email, $password, $confir
 
 		$doc->formatOutput = true;
 		$customerXML = $doc->save($xmlfile);  
+		chmod('../../data/customer.xml', 0777);
 
 		return true;
 	}

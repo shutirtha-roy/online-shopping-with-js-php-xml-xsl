@@ -2,38 +2,26 @@
 <customers>
   <customer>
     <customer_id>CUS-S01</customer_id>
-    <first_name>Samin</first_name>
-    <surname>Kaosar</surname>
-    <email>samin@gmail.com</email>
-    <password>samin@gmail.com</password>
-    <phone>(04)01634443</phone>
+    <first_name>Anirban</first_name>
+    <surname>Mistry</surname>
+    <email>anirban@gmail.com</email>
+    <password>anirban123</password>
+    <phone>04 01453223</phone>
   </customer>
   <customer>
     <customer_id>CUS-S02</customer_id>
-    <first_name>Kabab</first_name>
-    <surname>Ahmed</surname>
-    <email>samin@gmail.com</email>
-    <password>samin@gmail.com</password>
+    <first_name>Saif</first_name>
+    <surname>Sayeed</surname>
+    <email>saif@gmail.com</email>
+    <password>saf123456</password>
+    <phone>(04)34532354</phone>
   </customer>
   <customer>
     <customer_id>CUS-S03</customer_id>
-    <first_name>Kabab</first_name>
-    <surname>Ahmed</surname>
-    <email>samin@gmail.com</email>
-    <password>samin@gmail.com</password>
-  </customer>
-  <customer>
-    <customer_id>CUS-S04</customer_id>
-    <first_name>Kabab</first_name>
-    <surname>Ahmed</surname>
-    <email>samin@gmail.com</email>
-    <password>samin@gmail.com</password>
-  </customer>
-  <customer>
-    <customer_id>CUS-S05</customer_id>
-    <first_name>Kabab</first_name>
-    <surname>Ahmed</surname>
-    <email>samin@gmail.com</email>
-    <password>samin@gmail.com</password>
+    <first_name>Shutirtha</first_name>
+    <surname>Roy</surname>
+    <email>shutirtha@gmail.com</email>
+    <password>shutirtha123</password>
+    <phone>(04)63432354</phone>
   </customer>
 </customers>
